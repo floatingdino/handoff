@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from '../assets/logo.svg';
 import '../styles/ui.css';
+import { usePostMessage } from '@/hooks/usePostMessage';
 
 function App() {
   const textbox = React.useRef<HTMLInputElement>(undefined);
@@ -10,10 +11,10 @@ function App() {
     textbox.current = element;
   }, []);
 
-  const onCreate = () => {
-    const count = parseInt(textbox.current.value, 10);
-    parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*');
-  };
+  // const onCreate = () => {
+  //   const count = parseInt(textbox.current.value, 10);
+  //   parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*');
+  // };
 
   const onCancel = () => {
     parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
@@ -29,6 +30,12 @@ function App() {
     };
   }, []);
 
+  const lastSelection = usePostMessage('selectionchange');
+
+  useEffect(() => {
+    console.log(lastSelection);
+  }, [lastSelection]);
+
   return (
     <div>
       <img src={logo} />
@@ -36,7 +43,12 @@ function App() {
       <p>
         Count: <input ref={countRef} />
       </p>
-      <button id="create" onClick={onCreate}>
+      <button
+        id="create"
+        onClick={() => {
+          console.log(figma.currentPage.selection);
+        }}
+      >
         Create
       </button>
       <button onClick={onCancel}>Cancel</button>

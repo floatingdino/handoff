@@ -1,4 +1,18 @@
+import { serialiseNodes } from '@/utils/serialiseNode';
+
 figma.showUI(__html__);
+
+figma.ui.postMessage({
+  type: 'selectionchange',
+  selection: serialiseNodes(figma.currentPage.selection),
+});
+
+figma.on('selectionchange', () => {
+  figma.ui.postMessage({
+    type: 'selectionchange',
+    selection: serialiseNodes(figma.currentPage.selection),
+  });
+});
 
 figma.ui.onmessage = (msg) => {
   if (msg.type === 'create-rectangles') {
