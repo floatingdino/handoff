@@ -4,6 +4,6 @@
 
 @layer base {
   html {
-    @apply text-[0.75rem];
+    @apply text-[0.6875rem];
   }
 }
