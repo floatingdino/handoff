@@ -1,5 +1,6 @@
 body {
-  font: 12px sans-serif;
+  font-size: 12px;
+  font-family: ui-sans-serif, system-ui, sans-serif;
   text-align: center;
   margin: 20px;
 }
